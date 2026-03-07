@@ -24,12 +24,12 @@ const VideoSection = () => {
       <video
         ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover"
-        src="/videos/love-video.mp4"
+        src="/videos/VID_ConHem.mp4"
         muted
         loop
         playsInline
-        preload="metadata"
-        poster="/images/hero.jpg"
+        preload="none"
+        poster="/images/hero_namTay_2.jpg"
       />
 
       {/* Overlay */}

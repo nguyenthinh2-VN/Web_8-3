@@ -41,6 +41,7 @@ const FirstMeet = () => {
                 src={config.firstMeetConfig.image}
                 alt="Ngày đầu gặp mặt"
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
               {/* Decorative border */}
               <div className="absolute inset-3 rounded-2xl border border-white/30 pointer-events-none" />

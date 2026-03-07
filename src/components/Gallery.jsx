@@ -10,9 +10,9 @@ const Gallery = () => {
 
   return (
     <section className="section-padding bg-[var(--color-cream)]">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto px-6">
         {/* Title */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 md:mb-16">
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -32,38 +32,37 @@ const Gallery = () => {
           </motion.h2>
         </div>
 
-        {/* Grid Preview – Bento-style layout */}
+        {/* Grid Preview */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-4 grid-rows-2 gap-3 md:gap-4 h-[55vh] md:h-[65vh] max-h-[600px] cursor-pointer"
+          className="grid grid-cols-2 gap-3 md:gap-4 cursor-pointer"
           onClick={() => setIsOpen(true)}
         >
-          {/* Ảnh 1: Chiếm 2 hàng bên trái */}
-          <div className="row-span-2 col-span-1 md:col-span-2 rounded-2xl overflow-hidden relative group">
-            <img src={album[0]} alt="Gallery 1" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
+          {/* Ảnh 1 */}
+          <div className="aspect-square rounded-2xl overflow-hidden relative group">
+            <img src={album[0]} alt="Gallery 1" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" referrerPolicy="no-referrer" />
           </div>
 
           {/* Ảnh 2 */}
           {album.length > 1 && (
-            <div className="rounded-2xl overflow-hidden relative group">
-              <img src={album[1]} alt="Gallery 2" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div className="aspect-square rounded-2xl overflow-hidden relative group">
+              <img src={album[1]} alt="Gallery 2" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" referrerPolicy="no-referrer" />
             </div>
           )}
 
           {/* Ảnh 3 */}
           {album.length > 2 && (
-            <div className="rounded-2xl overflow-hidden relative group">
-              <img src={album[2]} alt="Gallery 3" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div className="aspect-square rounded-2xl overflow-hidden relative group">
+              <img src={album[2]} alt="Gallery 3" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" referrerPolicy="no-referrer" />
             </div>
           )}
 
           {/* Ảnh 4 + overlay "+N" */}
           {album.length > 3 && (
-            <div className="rounded-2xl overflow-hidden relative group col-span-2 md:col-span-2">
-              <img src={album[3]} alt="Gallery 4" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div className="aspect-square rounded-2xl overflow-hidden relative group">
+              <img src={album[3]} alt="Gallery 4" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" referrerPolicy="no-referrer" />
               {remaining > 0 && (
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors flex items-center justify-center">
                   <div className="text-center text-white">
@@ -97,7 +96,7 @@ const Gallery = () => {
             </div>
 
             <div className="flex-1 overflow-y-auto">
-              <div className="columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4">
+              <div className="columns-2 md:columns-3 gap-3 space-y-3">
                 {album.map((imgSrc, index) => (
                   <motion.div
                     key={index}
@@ -106,7 +105,7 @@ const Gallery = () => {
                     transition={{ delay: index * 0.04 }}
                     className="break-inside-avoid rounded-xl overflow-hidden"
                   >
-                    <img src={imgSrc} className="w-full object-cover" alt={`Album ${index + 1}`} />
+                    <img src={imgSrc} className="w-full object-cover" alt={`Album ${index + 1}`} loading="lazy" referrerPolicy="no-referrer" />
                   </motion.div>
                 ))}
               </div>

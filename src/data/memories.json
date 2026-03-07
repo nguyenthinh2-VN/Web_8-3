@@ -2,25 +2,25 @@
   {
     "id": 1,
     "title": "Lần đầu đi xem phim",
-    "image": "/images/memory1.jpg",
+    "image": "/images/di_XemPhim.jpg",
     "text": "Bộ phim đầu tiên hai đứa cùng xem. Cảm giác lúc đó vẫn còn nguyên vẹn."
   },
   {
     "id": 2,
     "title": "Đi ăn cùng nhau",
-    "image": "/images/memory2.jpg",
+    "image": "/images/di_An.jpg",
     "text": "Những bữa ăn ngon hơn gấp bội khi có em ngồi bên cạnh. Anh nhớ mãi nụ cười của em lúc đó."
   },
   {
     "id": 3,
     "title": "Buổi hẹn cafe",
-    "image": "/images/memory3.jpg",
+    "image": "/images/di_Cafe.jpg",
     "text": "Ly cafe chiều nay ngọt hơn bình thường, có lẽ vì được ngồi đối diện em."
   },
   {
     "id": 4,
     "title": "Chuyến đi Vũng Tàu",
-    "image": "/images/memory4.jpg",
+    "image": "/images/di_VungT.jpg",
     "text": "Biển xanh, gió mát và đôi ta. Chuyến đi mà anh muốn quay lại thêm nhiều lần nữa."
   }
 ]

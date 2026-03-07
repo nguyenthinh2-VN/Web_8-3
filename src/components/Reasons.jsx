@@ -1,79 +1,81 @@
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
 import { motion } from 'framer-motion';
-import { Sparkles, Heart, Sun } from 'lucide-react';
+import reasons from '../data/reasons.json';
+import 'swiper/css';
+import 'swiper/css/pagination';
 
-const reasons = [
-  {
-    id: 1,
-    title: 'Nụ cười của em',
-    text: 'Mỗi lần em cười, dường như mọi mệt mỏi trong anh đều tan biến. Nụ cười ấy là ánh dương rực rỡ nhất.',
-    icon: Sun,
-    gradient: 'from-orange-100 to-pink-100',
-  },
-  {
-    id: 2,
-    title: 'Sự ấm áp',
-    text: 'Những cái ôm, những lời hỏi han ân cần của em làm anh cảm thấy thực sự bình yên và yêu đời hơn.',
-    icon: Heart,
-    gradient: 'from-pink-100 to-rose-100',
-  },
-  {
-    id: 3,
-    title: 'Gia vị cuộc sống',
-    text: 'Bên em, cuộc sống tẻ nhạt của anh bỗng có thêm muôn vàn màu sắc thú vị và những kỷ niệm khó quên.',
-    icon: Sparkles,
-    gradient: 'from-purple-100 to-pink-100',
-  },
-];
+const MediaCard = ({ item }) => (
+  <div className="relative h-[450px] md:h-[500px] rounded-3xl overflow-hidden shadow-lg group">
+    {/* Media */}
+    {item.mediaType === 'video' ? (
+      <video src={item.media} className="w-full h-full object-cover" muted loop playsInline autoPlay />
+    ) : (
+      <img src={item.media} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" draggable={false} />
+    )}
+
+    {/* Gradient overlay */}
+    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+    {/* Text content */}
+    <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+      <h3 className="text-2xl md:text-3xl font-bold text-white mb-2" style={{ fontFamily: 'var(--font-script)' }}>
+        {item.title}
+      </h3>
+      <p className="text-white/80 font-light text-sm md:text-base leading-relaxed">
+        {item.text}
+      </p>
+    </div>
+  </div>
+);
 
 const Reasons = () => {
   return (
-    <section className="section-padding bg-[var(--color-bg)] relative overflow-hidden">
-      <div className="max-w-5xl mx-auto relative z-10">
+    <section className="py-20 md:py-28 bg-[var(--color-bg)] relative overflow-hidden">
+      <div className="max-w-6xl mx-auto relative z-10 px-6">
         {/* Title */}
-        <div className="text-center mb-16">
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-sm tracking-[0.3em] uppercase text-[var(--color-text-soft)] font-light mb-3"
-          >
+        <div className="text-center mb-12 md:mb-16">
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-sm tracking-[0.3em] uppercase text-[var(--color-text-soft)] font-light mb-3">
             Lý do
           </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-[var(--color-primary)]"
-            style={{ fontFamily: 'var(--font-script)' }}
-          >
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-4xl md:text-5xl font-bold text-[var(--color-primary)]" style={{ fontFamily: 'var(--font-script)' }}>
             Và cứ thế... anh yêu em ❤️
           </motion.h2>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {reasons.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.7, delay: idx * 0.15, type: 'spring', stiffness: 80 }}
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className={`rounded-3xl p-8 bg-gradient-to-br ${item.gradient} border border-white/60 shadow-sm hover:shadow-xl transition-shadow cursor-default`}
-              >
-                <div className="w-14 h-14 rounded-2xl bg-white/70 flex items-center justify-center mb-6 shadow-sm">
-                  <Icon className="w-7 h-7 text-[var(--color-primary)]" />
-                </div>
-                <h3 className="text-xl font-semibold text-[var(--color-text)] mb-3">{item.title}</h3>
-                <p className="text-[var(--color-text-soft)] font-light leading-relaxed text-sm">{item.text}</p>
-              </motion.div>
-            );
-          })}
-        </div>
+        {/* Swiper – NO loop, NO navigation */}
+        <Swiper
+          modules={[Pagination]}
+          slidesPerView={1.15}
+          spaceBetween={16}
+          centeredSlides
+          pagination={{ clickable: true }}
+          grabCursor
+          loop={false}
+          breakpoints={{
+            640: { slidesPerView: 1.5, spaceBetween: 20 },
+            1024: { slidesPerView: 2.3, spaceBetween: 28, centeredSlides: false },
+          }}
+          className="reasons-swiper !pb-14"
+        >
+          {reasons.map((item) => (
+            <SwiperSlide key={item.id}>
+              <MediaCard item={item} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
+
+      <style>{`
+        .reasons-swiper .swiper-pagination-bullet {
+          background: var(--color-primary-light); opacity: 1;
+          width: 10px; height: 10px;
+        }
+        .reasons-swiper .swiper-pagination-bullet-active {
+          background: var(--color-primary);
+          width: 28px; border-radius: 6px;
+        }
+      `}</style>
     </section>
   );
 };

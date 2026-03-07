@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Chiếc Đồng Hồ",
+    "image": "/images/gift1.jpg",
+    "note": "Món quà nhỏ bé nhưng chứa đựng tình cảm to lớn"
+  },
+  {
+    "id": 2,
+    "title": "Bức thư tay",
+    "image": "/images/gift2.jpg",
+    "note": "Những dòng chữ ngọt ngào anh vẫn giữ"
+  },
+  {
+    "id": 3,
+    "title": "Chiếc áo couple",
+    "image": "/images/gift3.jpg",
+    "note": "Để cả thế giới biết mình thuộc về nhau"
+  },
+  {
+    "id": 4,
+    "title": "Áo thun",
+    "image": "/images/gift1.jpg",
+    "note": "Món quà nhỏ bé nhưng chứa đựng tình cảm to lớn"
+  },
+  {
+    "id": 5,
+    "title": "Tai Nghe",
+    "image": "/images/gift2.jpg",
+    "note": "Những dòng chữ ngọt ngào anh vẫn giữ"
+  },
+  {
+    "id": 6,
+    "title": "Bó Hoa",
+    "image": "/images/gift3.jpg",
+    "note": "Để cả thế giới biết mình thuộc về nhau"
+  }
+]

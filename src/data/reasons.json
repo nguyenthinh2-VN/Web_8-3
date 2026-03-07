@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "Nụ cười của em",
+    "text": "Mỗi lần em cười, dường như mọi mệt mỏi trong anh đều tan biến.",
+    "media": "/images/reason1.jpg",
+    "mediaType": "image"
+  },
+  {
+    "id": 2,
+    "title": "Sự ấm áp",
+    "text": "Những cái ôm, những lời hỏi han ân cần của em làm anh cảm thấy thực sự bình yên.",
+    "media": "/images/reason2.jpg",
+    "mediaType": "image"
+  },
+  {
+    "id": 3,
+    "title": "Gia vị cuộc sống",
+    "text": "Bên em, cuộc sống tẻ nhạt của anh bỗng có thêm muôn vàn màu sắc.",
+    "media": "/images/reason3.jpg",
+    "mediaType": "image"
+  }
+]
