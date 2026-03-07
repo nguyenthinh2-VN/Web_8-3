@@ -10,7 +10,7 @@ import Reasons from './components/Reasons'
 import Gallery from './components/Gallery'
 import GiftsFromHer from './components/GiftsFromHer'
 import MiniGame from './components/MiniGame'
-import ScratchCard from './components/ScratchCard'
+import MemoryMatch from './components/MemoryMatch'
 
 // 5 mẫu Loading Screen – xem tất cả rồi chọn 1 mẫu đẹp nhất
 import LoadingMemories from './components/loaders/LoadingMemories'
@@ -67,7 +67,7 @@ function App() {
           <Gallery />
           <GiftsFromHer />
           <MiniGame />
-          <ScratchCard />
+          <MemoryMatch />
           <footer className="py-8 text-center text-xs text-[var(--color-text-soft)]/50 font-light tracking-wider">
             Made with ❤️ for you
           </footer>
