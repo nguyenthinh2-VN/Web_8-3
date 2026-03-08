@@ -29,7 +29,7 @@ const VideoSection = () => {
         loop
         playsInline
         preload="none"
-        poster="/images/hero_namTay_2.jpg"
+        poster="/images/hero_namTay_2.webp"
       />
 
       {/* Overlay */}

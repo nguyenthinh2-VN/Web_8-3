@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "question": "Ngày mình bắt đầu yêu nhau?",
+    "hint": "DD/MM/2022",
+    "answer": "07052022",
+    "inputLength": 8,
+    "inputType": "numpad",
+    "narrative": "Mọi câu chuyện đều bắt đầu từ một ngày đặc biệt...",
+    "successText": "Em nhớ ngày đó! ✨",
+    "bgImage": "/images/hero_namTay_1.webp",
+    "bgType": "image"
+  },
+  {
+    "id": 2,
+    "question": "Món quà đầu tiên em tặng anh là gì?",
+    "hint": "Nhập câu trả lời",
+    "answer": "Đồng Hồ",
+    "inputLength": 0,
+    "inputType": "text",
+    "narrative": "Nhưng tình yêu không chỉ là ngày tháng...",
+    "successText": "Tuyệt vời! 💕",
+    "bgImage": "/images/Cauhoi_2.webp",
+    "bgType": "image"
+  },
+  {
+    "id": 3,
+    "question": "Em có muốn ở bên anh mãi không?",
+    "hint": "Chọn câu trả lời",
+    "answer": "Có",
+    "inputLength": 0,
+    "inputType": "yesno",
+    "narrative": "Và một điều cuối cùng để mở khóa trái tim...",
+    "successText": "Đúng rồi! ❤️",
+    "bgImage": "/images/Cauhoi_3.webp",
+    "bgType": "image"
+  }
+]

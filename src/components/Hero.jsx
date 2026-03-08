@@ -102,7 +102,7 @@ const Hero = () => {
       <motion.div style={{ opacity, y: textY }} className="relative z-10 text-center text-white px-6 flex flex-col items-center gap-5 max-w-2xl pointer-events-none">
         <motion.span
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3 }}
+          transition={{ duration: 0.1, delay: 0.3 }}
           className="text-xs md:text-sm tracking-[0.35em] uppercase text-white/70 font-light"
         >
           Câu chuyện của chúng mình

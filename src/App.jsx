@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+
+import GameIntro from './components/GameIntro'
 
 import Hero from './components/Hero'
 import LoveCounter from './components/LoveCounter'
@@ -12,67 +14,46 @@ import GiftsFromHer from './components/GiftsFromHer'
 import MiniGame from './components/MiniGame'
 import MemoryMatch from './components/MemoryMatch'
 
-// 5 mẫu Loading Screen – xem tất cả rồi chọn 1 mẫu đẹp nhất
-import LoadingMemories from './components/loaders/LoadingMemories'
-import LoadingHeart from './components/loaders/LoadingHeart'
-import LoadingPolaroid from './components/loaders/LoadingPolaroid'
-import LoadingTyping from './components/loaders/LoadingTyping'
-import LoadingCountdown from './components/loaders/LoadingCountdown'
-
 /*
-  ============================================================
-  ĐỂ TEST TẤT CẢ MẪU LOADING:
-  - Đổi giá trị ACTIVE_LOADER bên dưới (1-5) để xem từng mẫu
-  - Hoặc đặt = 0 để tắt loading screen
-  ============================================================
-  1 = LoadingMemories  (progress bar + text theo %)
-  2 = LoadingHeart     (trái tim vẽ dần + pulse glow)
-  3 = LoadingPolaroid  (ảnh polaroid rơi xuống)
-  4 = LoadingTyping    (typewriter: "Every love story...")
-  5 = LoadingCountdown (3→2→1→ "{days} Days With You")
+  Đổi SKIP_INTRO = true để bỏ qua game intro (dev mode)
 */
-const ACTIVE_LOADER = 4;
-
-const loaders = {
-  1: LoadingMemories,
-  2: LoadingHeart,
-  3: LoadingPolaroid,
-  4: LoadingTyping,
-  5: LoadingCountdown,
-};
+const SKIP_INTRO = false;
 
 function App() {
-  const [loading, setLoading] = useState(ACTIVE_LOADER !== 0);
-
-  const ActiveLoader = loaders[ACTIVE_LOADER];
+  const [started, setStarted] = useState(SKIP_INTRO);
 
   return (
     <>
-      {/* Loading Screen */}
+      {/* Game Intro */}
       <AnimatePresence>
-        {loading && ActiveLoader && (
-          <ActiveLoader onComplete={() => setLoading(false)} />
+        {!started && (
+          <motion.div key="game" exit={{ opacity: 0 }} transition={{ duration: 0.8 }}>
+            <GameIntro onComplete={() => setStarted(true)} />
+          </motion.div>
         )}
       </AnimatePresence>
 
       {/* Main Content */}
-      {!loading && (
-        <div className="min-h-screen bg-[var(--color-bg)]">
-          <Hero />
-          <LoveCounter />
-          <FirstMeet />
-          <Timeline />
-          <VideoSection />
-          <Reasons />
-          <Gallery />
-          <GiftsFromHer />
-          <MiniGame />
-          <MemoryMatch />
-          <footer className="py-8 text-center text-xs text-[var(--color-text-soft)]/50 font-light tracking-wider">
-            Made with ❤️ for you
-          </footer>
-        </div>
-      )}
+      <AnimatePresence>
+        {started && (
+          <motion.div key="main" initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            transition={{ duration: 1 }} className="min-h-screen bg-[var(--color-bg)]">
+            <Hero />
+            <LoveCounter />
+            <FirstMeet />
+            <Timeline />
+            <VideoSection />
+            <Reasons />
+            <Gallery />
+            <GiftsFromHer />
+            <MiniGame />
+            <MemoryMatch />
+            <footer className="py-8 text-center text-xs text-[var(--color-text-soft)]/50 font-light tracking-wider">
+              Made with ❤️ for you
+            </footer>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }
