@@ -4,6 +4,7 @@ import { Delete, CheckCircle2, ChevronRight, Heart } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import config from '../data/config.json';
 import questions from '../data/questions.json';
+import { playTap, playInput, playDelete, playError, playCorrect, playSealBreak, playVictory, playType, playNext } from '../utils/sounds';
 
 const PROLOGUE = [
   { text: 'Trong hàng triệu người trên thế giới này...', font: 'dancing' },
@@ -35,7 +36,7 @@ const FloatingHeart = ({ delay }) => (
 const TypewriterLine = ({ text, font, onDone }) => {
   const [ci, setCi] = useState(0);
   useEffect(() => {
-    if (ci < text.length) { const t = setTimeout(() => setCi(c => c + 1), 38); return () => clearTimeout(t); }
+    if (ci < text.length) { const t = setTimeout(() => { playType(); setCi(c => c + 1); }, 38); return () => clearTimeout(t); }
     else { const t = setTimeout(() => onDone?.(), 500); return () => clearTimeout(t); }
   }, [ci, text.length]);
 
@@ -172,6 +173,7 @@ const NarrativeDialogue = ({ lines, onComplete }) => {
   const [done, setDone] = useState(false);
   const handleNext = () => {
     if (!done) return;
+    playNext();
     if (li < lines.length - 1) { setLi(i => i + 1); setDone(false); }
     else onComplete?.();
   };
@@ -216,8 +218,10 @@ const QuestionPanel = ({ question, onCorrect, onWrong }) => {
     const ans = val ?? input;
     if (ans.trim().toLowerCase() === question.answer.toLowerCase()) {
       setCorrect(true);
+      playCorrect();
     } else {
       setShake(true);
+      playError();
       onWrong?.();
       setTimeout(() => { setShake(false); setInput(''); }, 700);
     }
@@ -226,15 +230,16 @@ const QuestionPanel = ({ question, onCorrect, onWrong }) => {
   // Numpad key handler
   const handleKey = useCallback((key) => {
     if (correct) return;
-    if (key === '⌫') setInput(p => p.slice(0, -1));
-    else if (key === '✓') checkAnswer();
-    else if (input.length < question.inputLength) setInput(p => p + key);
+    if (key === '⌫') { playDelete(); setInput(p => p.slice(0, -1)); }
+    else if (key === '✓') { playTap(); checkAnswer(); }
+    else if (input.length < question.inputLength) { playInput(); setInput(p => p + key); }
   }, [input, question, correct, checkAnswer]);
 
   // Yes/No handler
   const handleYesNo = useCallback((val) => {
     if (correct) return;
     setInput(val);
+    playTap();
     if (val.toLowerCase() === question.answer.toLowerCase()) {
       setCorrect(true);
     } else {
@@ -399,6 +404,7 @@ const GameIntro = ({ onComplete }) => {
   const handleCorrect = useCallback(() => {
     setSeals(s => s - 1);
     setScreenFlash('white');
+    playSealBreak();
     confetti({ particleCount: 40, spread: 100, startVelocity: 20, origin: { y: 0.3 },
       colors: ['#718096', '#a0aec0', '#e8457c', '#fff'], zIndex: 400 });
     setTimeout(() => {
@@ -406,6 +412,7 @@ const GameIntro = ({ onComplete }) => {
       if (qIdx < questions.length - 1) { setQIdx(i => i + 1); setPhase('narrative'); }
       else {
         setPhase('victory');
+        playVictory();
         confetti({ particleCount: 200, spread: 360, startVelocity: 35, origin: { y: 0.4 },
           colors: ['#e8457c', '#f9a8c9', '#ff6b9d', '#ffd1dc', '#fff'], zIndex: 400 });
       }
@@ -415,6 +422,7 @@ const GameIntro = ({ onComplete }) => {
   const handleWrong = useCallback(() => {
     setHp(h => Math.max(0, h - 1));
     setHitAnim(true); setScreenFlash('red');
+    playError();
     setTimeout(() => { setHitAnim(false); setScreenFlash(''); }, 500);
   }, []);
 
@@ -530,11 +538,104 @@ const GameIntro = ({ onComplete }) => {
               Câu chuyện tình yêu bắt đầu từ đây...
             </motion.p>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }}>
-              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={onComplete}
+              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                onClick={() => setPhase('reveal')}
                 className="px-8 py-4 rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white font-medium shadow-lg shadow-[var(--color-primary)]/30 flex items-center gap-2 mx-auto">
                 <Heart size={18} fill="white" /> Bắt đầu câu chuyện
               </motion.button>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* REVEAL PHOTO */}
+      <AnimatePresence>
+        {phase === 'reveal' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="fixed inset-0 z-10 flex flex-col items-center justify-center"
+          >
+            {/* Shimmer loading placeholder → ảnh thật */}
+            <motion.div
+              initial={{ scale: 1.3, filter: 'blur(30px) brightness(0.3)' }}
+              animate={{ scale: 1, filter: 'blur(0px) brightness(1)' }}
+              transition={{ duration: 2.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="relative w-full h-full"
+            >
+              <img
+                src="/images/Anh_ghep.jpg"
+                alt="Chúng mình"
+                className="w-full h-full object-cover"
+              />
+
+              {/* Vignette overlay */}
+              <div className="absolute inset-0"
+                style={{
+                  background: 'radial-gradient(ellipse at center, transparent 40%, rgba(10,10,10,0.7) 100%)',
+                }} />
+
+              {/* Bottom gradient for text */}
+              <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent" />
+
+              {/* Sparkle particles */}
+              {Array.from({ length: 20 }).map((_, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: [0, 1, 0], scale: [0.5, 1, 0.5] }}
+                  transition={{
+                    duration: Math.random() * 2 + 1.5,
+                    delay: Math.random() * 2 + 0.5,
+                    repeat: Infinity,
+                    repeatDelay: Math.random() * 3,
+                  }}
+                  className="absolute w-1 h-1 bg-white rounded-full"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    boxShadow: '0 0 6px 2px rgba(255,255,255,0.6)',
+                  }}
+                />
+              ))}
+            </motion.div>
+
+            {/* Text overlay */}
+            <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-center z-20">
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.5, duration: 0.8 }}
+                className="text-2xl md:text-4xl font-bold text-white mb-2"
+                style={{ fontFamily: 'var(--font-script)', textShadow: '0 2px 20px rgba(0,0,0,0.6)' }}
+              >
+                Chúng mình 💕
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 2, duration: 0.8 }}
+                className="text-white/60 font-light text-sm mb-8"
+                style={{ textShadow: '0 1px 10px rgba(0,0,0,0.8)' }}
+              >
+                Mãi bên nhau nhé...
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 2.5, duration: 0.6 }}
+              >
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={onComplete}
+                  className="px-8 py-4 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white font-medium shadow-lg flex items-center gap-2 mx-auto hover:bg-white/25 transition-colors"
+                >
+                  <Heart size={18} fill="white" /> Vào câu chuyện của chúng mình
+                </motion.button>
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
