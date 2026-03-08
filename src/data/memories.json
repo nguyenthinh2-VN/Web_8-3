@@ -8,19 +8,19 @@
   {
     "id": 2,
     "title": "Đi ăn cùng nhau",
-    "image": "/images/di_An.jpg",
+    "image": "/images/di_An.webp",
     "text": "Những bữa ăn ngon hơn gấp bội khi có em ngồi bên cạnh. Anh nhớ mãi nụ cười của em lúc đó."
   },
   {
     "id": 3,
     "title": "Buổi hẹn cafe",
-    "image": "/images/di_Cafe.jpg",
+    "image": "/images/di_Cafe.webp",
     "text": "Ly cafe chiều nay ngọt hơn bình thường, có lẽ vì được ngồi đối diện em."
   },
   {
     "id": 4,
     "title": "Chuyến đi Vũng Tàu",
-    "image": "/images/di_VungT.jpg",
+    "image": "/images/di_VungT.webp",
     "text": "Biển xanh, gió mát và đôi ta. Chuyến đi mà anh muốn quay lại thêm nhiều lần nữa."
   }
 ]
