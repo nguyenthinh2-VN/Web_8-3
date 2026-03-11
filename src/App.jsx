@@ -17,7 +17,7 @@ import MemoryMatch from './components/MemoryMatch'
 /*
   Đổi SKIP_INTRO = true để bỏ qua game intro (dev mode)
 */
-const SKIP_INTRO = false;
+const SKIP_INTRO = true;
 
 function App() {
   const [started, setStarted] = useState(SKIP_INTRO);
